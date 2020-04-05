@@ -1,4 +1,4 @@
-include "alldifferent.mzn";
+include "globals.mzn";
 include "getIndexMax.mzn";
 include "getIndexMin.mzn";
 include "getBigger.mzn";
@@ -16,6 +16,8 @@ int: len = lim + 1;
 set of int: s =  1..lim;
 
 array[s] of var s: e;
+
+var int: c;
 
 constraint alldifferent(e);
 
@@ -35,10 +37,12 @@ constraint big == getBigger();
 var int: sm_bg = sum(i in s)(Escenas[big, i]);
 constraint U[big] - L[big] + 1 == sm_bg;
 
-
-var int: c = sum(a in ACTORES)(
+constraint c >0;
+constraint c = sum(a in ACTORES)(
   sum(i in L[a]..U[a])(Duracion[e[i]]) * Escenas[a, len]
 );
+
+constraint lex_lesseq(e, reverse(e));
 
 solve minimize c;
 
