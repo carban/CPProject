@@ -1,4 +1,4 @@
-function var s: getBigger() = 
+function var ACTORES: getBigger() = 
 let {
       var ACTORES: big;
       

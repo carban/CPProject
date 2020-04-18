@@ -2,9 +2,7 @@ include "globals.mzn";
 include "getIndexMax.mzn";
 include "getIndexMin.mzn";
 include "getBigger.mzn";
-% include "getSmall.mzn";
-include "getActorNorm.mzn";
-include "getNorm.mzn";
+include "getSmall.mzn";
 
 enum ACTORES;
 
@@ -34,23 +32,14 @@ constraint forall(a in ACTORES)(L[a] == getIndexMin(a));
 %Bigger
 var ACTORES: big;
 constraint big == getBigger();
-var int: sm_bg == sum(i in s)(Escenas[big, i]);
+var int: sm_bg = sum(i in s)(Escenas[big, i]);
 constraint U[big] - L[big] + 1 == sm_bg;
 
-var ACTORES: norm == getActorNorm();
-
-constraint U[norm] - L[norm] + 1 < lim;
-
-var int: border;
-
-constraint border == lim - (U[norm] - L[norm] + 1);
-
-constraint forall(a in ACTORES diff {big})(
- U[a] - L[a] + 1 >= sum(i in s)(Escenas[a,i]) /\ U[a] - L[a] + 1 <= lim - border
-);
-
-constraint lex_lesseq(e, reverse(e));
-% constraint lex_lesseq(reverse(e), e);
+%Smaller
+var ACTORES: small;
+constraint small == getSmaller();
+var int: sm_sm = sum(i in s)(Escenas[small, i]);
+constraint U[small] - L[small] + 1 >= sm_sm;
 
 var int: c;
 
@@ -62,10 +51,9 @@ constraint c == sum(a in ACTORES)(
 
 solve minimize c;
 
-output["\(e)\n\(c)\n\(border)"];
+output["\(e)\n\(c)"];
 % output["\(e)\n\(c)\n\(U)\n\(L)"];
 
 
 
 
-  

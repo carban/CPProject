@@ -20,6 +20,10 @@ set of int: s =  1..lim;
 
 array[s] of var s: e;
 
+predicate Dist(ACTORES: a, int: t) = sum(i in L[a]..U[a])(Duracion[e[i]]) <= t;
+predicate Evi(ACTORES: a, ACTORES: b) = U[a] <= L[b] \/ U[b] <= L[a];
+
+
 constraint all_different(e);
 
 % Upper indexs
