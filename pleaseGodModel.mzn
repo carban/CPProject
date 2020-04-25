@@ -15,7 +15,6 @@ include "globals.mzn";
 include "getIndexMax.mzn";
 include "getIndexMin.mzn";
 include "getBigger.mzn";
-include "getActorWorker.mzn";
 
 % ====== Parametros =======
 
@@ -56,20 +55,9 @@ constraint big == getBigger();
 var int: sm_bg == sum(i in s)(Escenas[big, i]);
 constraint U[big] - L[big] + 1 == sm_bg;
 
-% % Worker
-% % Se calcula el actor con mas participacion y se establece un rango determinado para sus escenas
-% var ACTORES: worker == getActorWorker();
-% constraint U[worker] - L[worker] + 1 <= lim;
-
-% % Border
-% % Permite establecer la longitud entre el inicio y el final de las escenas para el actor Worker
-% var int: border;
-% constraint border == U[worker] - L[worker] + 1;
-
 % Se condiciona el rango de posiciones posibles para el rango de escenas de cada actor sin incluir al actor Big
 constraint forall(a in ACTORES diff {big})(
- U[a] - L[a] + 1 >= sum(i in s)(Escenas[a,i]) 
-%  /\ U[a] - L[a] + 1 <= border
+ U[a] - L[a] + 1 >= sum(i in s)(Escenas[a,i]) /\ U[a] - L[a] + 1 <= lim
 );
 
 % Restriccion para eliminar simetrias lexicograficas

@@ -15,7 +15,6 @@ include "globals.mzn";
 include "getIndexMax.mzn";
 include "getIndexMin.mzn";
 include "getBigger.mzn";
-include "getActorWorker.mzn";
 
 % ====== Parametros =======
 
@@ -56,21 +55,45 @@ constraint big == getBigger();
 var int: sm_bg == sum(i in s)(Escenas[big, i]);
 constraint U[big] - L[big] + 1 == sm_bg;
 
-% % Worker
-% % Se calcula el actor con mas participacion y se establece un rango determinado para sus escenas
-% var ACTORES: worker == getActorWorker();
-% constraint U[worker] - L[worker] + 1 <= lim;
-
-% % Border
-% % Permite establecer la longitud entre el inicio y el final de las escenas para el actor Worker
-% var int: border;
-% constraint border == U[worker] - L[worker] + 1;
-
 % Se condiciona el rango de posiciones posibles para el rango de escenas de cada actor sin incluir al actor Big
+
+array[ACTORES] of var int: borders = [U[a] - L[a] + 1 | a in ACTORES];
+var int: border;
+constraint border == max(borders);
+
+% function var s: getRegular() = let {
+%   var s: r;
+  
+%   array[s] of int: regularArray = [sum(a in ACTORES)(Escenas[a,i]) | i in s];
+  
+%   int: regularValue = max(regularArray);
+%   constraint exists(i in s where regularArray[i] - regularValue == 0)(r == i);
+%   } in r;
+
+% var s: regular;
+% int: fracc = floor(lim div 3);
+% constraint regular == getRegular();
+% constraint exists(i in fracc..(len-fracc))(e[i] == regular);
+
 constraint forall(a in ACTORES diff {big})(
- U[a] - L[a] + 1 >= sum(i in s)(Escenas[a,i]) 
-%  /\ U[a] - L[a] + 1 <= border
+ U[a] - L[a] + 1 >= sum(i in s)(Escenas[a,i]) /\ U[a] - L[a] + 1 <= border
 );
+
+% function var int: varCostActor(ACTORES: a) = let{
+%   var int: cc == sum(i in L[a]..U[a])(Duracion[e[i]]) * Escenas[a, len];
+% }in cc;
+
+% function int: getCostActor(ACTORES: a) = let{
+%   int: cc == sum(i in s where Escenas[a, i] == 1)(Duracion[i]) * Escenas[a, len];
+% }in cc;
+
+
+% constraint forall(a in ACTORES diff {big})(
+% %  varCostActor(a) >= getCostActor(a) 
+% %  /\ 
+%  varCostActor(a) <= sum(i in 1..lim)(Duracion[e[i]]) * Escenas[a, len]
+% );
+
 
 % Restriccion para eliminar simetrias lexicograficas
 constraint lex_lesseq(e, reverse(e));
@@ -89,6 +112,7 @@ constraint c == sum(a in ACTORES)(
 solve minimize c;
 
 % ====== Salida =======
+% output["\(e)\nCosto: \(c)"];
 
-output["\(e)\nCosto: \(c)\n"];
+output["\(e)\nCosto: \(c)\nBorder: \(border) "];
   
