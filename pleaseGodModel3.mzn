@@ -66,8 +66,7 @@ constraint forall(a in ACTORES diff {big})(
 );
 
 function var int: varCostActor(ACTORES: a) = let{
-  var int: cc; 
-  constraint cc == sum(i in L[a]..U[a])(Duracion[e[i]]) * Escenas[a, len];
+  var int: cc == sum(i in L[a]..U[a])(Duracion[e[i]]) * Escenas[a, len];
 }in cc;
 
 function int: getCostActor(ACTORES: a) = let{
@@ -99,6 +98,6 @@ solve minimize c;
 
 % ====== Salida =======
 % output["\(e)\nCosto: \(c)"];
-
-output["\(e)\nCosto: \(c)\nBorder: \(border) "];
+output["\(e);\(c);"];
+% output["\(e)\nCosto: \(c)\nBorder: \(border) "];
   
