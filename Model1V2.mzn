@@ -89,10 +89,10 @@ constraint c == sum(a in ACTORES)(
   sum(i in L[a]..U[a])(Duracion[e[i]]) * Escenas[a, len]
 );
 
-% solve minimize c;
+solve minimize c;
 
 % Propuesta de una estrategia de busqueda para el problema
-solve :: seq_search([int_search(e, dom_w_deg, indomain_split)]) minimize c;
+% solve :: seq_search([int_search(e, dom_w_deg, indomain_split)]) minimize c;
 
 
 % ====== Salida =======
