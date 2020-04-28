@@ -1,3 +1,4 @@
+% Funcion que calcula al actor mas costoso del rodaje
 function var ACTORES: getBigger() = 
 let {
       var ACTORES: big;

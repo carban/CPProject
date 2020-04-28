@@ -1,3 +1,4 @@
+% Funcion que calcula al actor menos costoso del rodaje
 function var s: getSmaller() = 
 let {
       var ACTORES: small;

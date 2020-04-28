@@ -1,3 +1,4 @@
+% Funcion que calcula el indice donde cierto actor inicia de grabar sus escenas | LowerBound
 function var s: getIndexMin(ACTORES: a) = 
 let {
       int: sm = sum(i in s)(Escenas[a, i]);

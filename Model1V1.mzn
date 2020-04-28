@@ -1,4 +1,4 @@
-% ====== Proyecto de Curso Implementacion Parte I ======
+% ====== Proyecto de Curso Implementacion Parte I VERSION 1======
 
 % Planificación de los ensayos en una telenovela *
 % Programación por Restricciones
@@ -6,15 +6,16 @@
 % Facultad de Ingenierı́a
 
 % ====== Integrantes =======
-%  Alexander Gonzalez      14
-%  Carlos Esteban Murillo  15
+%  Alexander Gonzalez      201429927
+%  Carlos Esteban Murillo  201526857
 
 % ====== Funciones =======
 
 include "globals.mzn";
-include "getIndexMax.mzn";
-include "getIndexMin.mzn";
-include "getBigger.mzn";
+include "./Functions/getIndexMax.mzn";
+include "./Functions/getIndexMin.mzn";
+include "./Functions/getBigger.mzn";
+include "./Functions/getSmall.mzn";
 
 % ====== Parametros =======
 
@@ -34,9 +35,9 @@ set of int: s =  1..lim;
 
 array[s] of var s: e; % Arreglo Solucion
 
-% ====== Restricciones =======
-
 constraint all_different(e);
+
+% ====== Restricciones =======
 
 % Upper indexs
 % Guarda el indice de la ultima escena para un actor en particular
@@ -55,13 +56,12 @@ constraint big == getBigger();
 var int: sm_bg == sum(i in s)(Escenas[big, i]);
 constraint U[big] - L[big] + 1 == sm_bg;
 
-% Se condiciona el rango de posiciones posibles para el rango de escenas de cada actor sin incluir al actor Big
-constraint forall(a in ACTORES diff {big})(
- U[a] - L[a] + 1 >= sum(i in s)(Escenas[a,i]) /\ U[a] - L[a] + 1 <= lim
-);
-
-% Restriccion para eliminar simetrias lexicograficas
-constraint lex_lesseq(e, reverse(e));
+%Smaller
+% Se Calcula el actor menos costoso para la produccion y se determina un rango especifico para sus escenas
+var ACTORES: small;
+constraint small == getSmaller();
+var int: sm_sm = sum(i in s)(Escenas[small, i]);
+constraint U[small] - L[small] + 1 >= sm_sm;
 
 % ====== Funcion Objetivo =======
 
@@ -77,6 +77,4 @@ constraint c == sum(a in ACTORES)(
 solve minimize c;
 
 % ====== Salida =======
-
-output["\(e)\nCosto: \(c)\n"];
-  
+output["\(e)\nCosto: \(c)"];  
