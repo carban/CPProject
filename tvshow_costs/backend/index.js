@@ -18,9 +18,8 @@ const server = app.listen(app.get('port'), () => {
 });
 
 const pathMini = "/home/carban/PortableApps/MiniZincIDE-2.3.2-bundle-linux/bin/minizinc ";
-const pathModel = "/home/carban/Documents/ConstraintProgramming/CPProject/pleaseGodModel3.mzn";
-const pathModel2 = "/home/carban/Documents/ConstraintProgramming/CPProject/MOdelPart2.mzn";
-
+const pathModel = path.resolve("Model1V2.mzn");
+const pathModel2 = path.resolve("Model2.mzn");
 
 app.post("/api/fileProcess/", (req, res) => {
     const { file } = req.body;
@@ -63,7 +62,7 @@ app.post('/api/solve/model1/', (req, res) => {
 
     var command = '/..' + pathMini + ' --solver Chuffed ' + pathModel + inpp;
 
-    // console.log(command);
+    console.log(command);
 
     // DIRECTO
     try {
@@ -79,6 +78,7 @@ app.post('/api/solve/model1/', (req, res) => {
             }
         });
     } catch (error) {
+        console.log(error);
         res.json({ error: error });
     }
 })
@@ -120,7 +120,7 @@ app.post('/api/solve/model2/', (req, res) => {
 
     var command = '/..' + pathMini + ' --solver Chuffed ' + pathModel2 + inpp;
 
-    // console.log(command);
+    console.log(command);
 
     // DIRECTO
     try {
