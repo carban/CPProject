@@ -1,0 +1,10 @@
+Para el uso de la aplicacion web se deben realizar los siguientes pasos:
+
+1. Tener instalado Nodejs, ReactJs, npm
+
+1. Entrar al archivo /CPFront/backend/index.js 
+   cambiar la ruta del archivo binario de minizinc en la variable "pathMini"
+   
+2. Instalar las dependencias ejecutando el archivo install_dependencies.sh
+
+3. Correr las aplicaciones del backend y frontend con los archivos Back.sh y Front.sh respectivamente

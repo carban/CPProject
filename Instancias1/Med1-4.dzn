@@ -8,10 +8,11 @@ Escenas = [| 0,1,0,0,0,0,1,0,10
            
 Duracion = [2,1,1,1,3,4,2,3];
 
-% Ejecución con Gecode
+% Ejecución con Chuffed
 
-% Orden de las Escenas: [5, 1, 6, 3, 4, 2, 7, 8]
+% ----------
+% [5, 1, 6, 4, 3, 2, 7, 8]
 % Costo: 490
 % ----------
 % ==========
-% Finished in 7m 29s
+% Finished in 183msec

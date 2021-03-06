@@ -15,14 +15,15 @@ Disponibilidad =[|Actor1, 5
 Evitar =[|Actor1, Actor2
          |Actor2, Actor3|];
 
-% Ejecución con Gecode
+% Ejecución con Chuffed
 
-% Orden de las Escenas: [4, 3, 2, 6, 1, 5]
+% ----------
+% [3, 4, 2, 6, 1, 5]
 % Costo: 330
-% Tiempo Compartido: 8
+% Tiempo Compartido:8
 % ----------
 % ==========
-% Finished in 260msec
+% Finished in 151msec
 
 
 

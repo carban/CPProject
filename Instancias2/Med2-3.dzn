@@ -19,11 +19,12 @@ Evitar =[|Actor1, Actor2
          |Actor2, Actor3
          |Actor4, Actor5|];
 
-%Ejecución con Gecode
+%Ejecución con Chuffed
 
-% Orden de las Escenas: [5, 1, 6, 9, 4, 3, 2, 7, 8]
+% ----------
+% [5, 1, 6, 3, 9, 4, 2, 7, 8]
 % Costo: 520
-% Tiempo Compartido: 11
+% Tiempo Compartido:11
 % ----------
 % ==========
-% Finished in 31s 398msec
+% Finished in 207msec
